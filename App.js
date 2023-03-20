@@ -2,6 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { useState, useEffect, useCallback } from "react";
 import { Button, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 
 SplashScreen.preventAutoHideAsync();
@@ -9,26 +10,31 @@ SplashScreen.preventAutoHideAsync();
 export default function App() {
   const [appIsLoaded, setAppIsLoaded] = useState(false);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setAppIsLoaded(true);
-    }, 2000);
+  const [fontsLoaded] = useFonts({
+    "Roboto-Black": require("./assets/fonts/Roboto-Black.ttf"),
+    "Roboto-Bold": require("./assets/fonts/Roboto-Bold.ttf"),
+    "Roboto-Thin": require("./assets/fonts/Roboto-Thin.ttf"),
   });
 
-  const onLayout = useCallback(async () => {
-    if (appIsLoaded) {
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
       await SplashScreen.hideAsync();
     }
-  }, [appIsLoaded]);
+  }, [fontsLoaded]);
 
-  if (!appIsLoaded) {
+  if (!fontsLoaded) {
     return null;
   }
 
   return (
-    <SafeAreaProvider style={styles.container} onLayout={onLayout}>
+    <SafeAreaProvider style={styles.container} onLayout={onLayoutRootView}>
       <SafeAreaView>
-        <Text>Hi</Text>
+        <Text style={{ fontFamily: "Roboto-Bold", fontSize: 30 }}>
+          Inter Black
+        </Text>
+        <Text style={{ fontFamily: "Roboto-Thin", fontSize: 30 }}>
+          Platform Default
+        </Text>
         <StatusBar style="auto" />
       </SafeAreaView>
     </SafeAreaProvider>
