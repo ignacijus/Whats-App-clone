@@ -14,6 +14,7 @@ export default function App() {
     "Roboto-Black": require("./assets/fonts/Roboto-Black.ttf"),
     "Roboto-Bold": require("./assets/fonts/Roboto-Bold.ttf"),
     "Roboto-Thin": require("./assets/fonts/Roboto-Thin.ttf"),
+    "Roboto-Thin-Italic": require("./assets/fonts/Roboto-ThinItalic.ttf"),
   });
 
   const onLayoutRootView = useCallback(async () => {
