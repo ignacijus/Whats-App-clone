@@ -8,9 +8,22 @@ import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import ChatListScreen from "./screens/ChatListScreen";
+import ChatSettingsScreen from "./screens/ChatSettingsScreen";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import SettingsScreen from "./screens/SettingsScreen";
 
 SplashScreen.preventAutoHideAsync();
 const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+
+const TabNavigator = () => {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="ChatList" component={ChatListScreen} />
+      <Tab.Screen name="Settings" component={SettingsScreen} />
+    </Tab.Navigator>
+  );
+};
 
 export default function App() {
   const [appIsLoaded, setAppIsLoaded] = useState(false);
@@ -36,10 +49,20 @@ export default function App() {
     // <SafeAreaProvider style={styles.container} onLayout={onLayoutRootView}>
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={ChatListScreen} />
+        <Stack.Screen
+          name="Home"
+          component={TabNavigator}
+          options={{
+            headerTitleAlign: "center",
+            headerMode: "screen",
+            headerTintColor: "white",
+            headerStyle: { backgroundColor: "tomato" },
+          }}
+        />
+        <Stack.Screen name="ChatSettings" component={ChatSettingsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
-    // /* </SafeAreaProvider> */
+    /* </SafeAreaProvider> */
   );
 }
 
