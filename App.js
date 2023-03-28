@@ -4,8 +4,13 @@ import { Button, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import "react-native-gesture-handler";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import ChatListScreen from "./screens/ChatListScreen";
 
 SplashScreen.preventAutoHideAsync();
+const Stack = createStackNavigator();
 
 export default function App() {
   const [appIsLoaded, setAppIsLoaded] = useState(false);
@@ -28,17 +33,13 @@ export default function App() {
   }
 
   return (
-    <SafeAreaProvider style={styles.container} onLayout={onLayoutRootView}>
-      <SafeAreaView>
-        <Text style={{ fontFamily: "Roboto-Bold", fontSize: 30 }}>
-          Inter Black
-        </Text>
-        <Text style={{ fontFamily: "Roboto-Thin", fontSize: 30 }}>
-          Platform Default
-        </Text>
-        <StatusBar style="auto" />
-      </SafeAreaView>
-    </SafeAreaProvider>
+    // <SafeAreaProvider style={styles.container} onLayout={onLayoutRootView}>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={ChatListScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+    // /* </SafeAreaProvider> */
   );
 }
 
